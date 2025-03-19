@@ -63,7 +63,6 @@
 //}
 //}
 
-
 #include <iostream>
 #include <string.h>
 #include <stdlib.h>
@@ -80,28 +79,46 @@ public:
     int pages;
 };
 
+// Function to search for a book by ID
+void searchBook(Library lib[], int count, int bookID) {
+    for (int i = 0; i < count; i++) {
+        if (lib[i].id == bookID) {
+            cout << "\nBook Found:\n";
+            cout << "Book Id: " << lib[i].id << endl;
+            cout << "Book Name: " << lib[i].name << endl;
+            cout << "Book Author: " << lib[i].author << endl;
+            cout << "Student Name: " << lib[i].student << endl;
+            cout << "Book Pages: " << lib[i].pages << endl;
+            cout << "Book Price: " << lib[i].prices << endl;
+            return;
+        }
+    }
+    cout << "Book not found!" << endl;
+}
+
 int main() {
     Library lib[20];  
     int input = 0;
     int count = 0;
 
-    while (true) {  // Run until the user chooses to quit
+    while (true) {
         cout << "\nEnter 1 to input book details" << endl;
         cout << "Enter 2 to display book details" << endl;
-        cout << "Enter 3 to quit" << endl;
+        cout << "Enter 3 to search for a book by ID" << endl;
+        cout << "Enter 4 to quit" << endl;
         cin >> input;
-        cin.ignore(); // To ignore any leftover newline characters from previous input
+        cin.ignore();
 
         switch (input) {
             case 1:
-                if (count >= 20) {  // Prevent array overflow
+                if (count >= 20) {
                     cout << "Library is full. Cannot add more books." << endl;
                     break;
                 }
 
                 cout << "Enter Book Id: ";
                 cin >> lib[count].id;
-                cin.ignore(); // Ignore the newline character
+                cin.ignore();
 
                 cout << "Enter Book Name: ";
                 cin.getline(lib[count].name, 100);
@@ -139,12 +156,18 @@ int main() {
                 break;
 
             case 3:
+                int bookID;
+                cout << "Enter Book ID to search: ";
+                cin >> bookID;
+                searchBook(lib, count, bookID);
+                break;
+
+            case 4:
                 cout << "Exiting the program..." << endl;
                 exit(0);
 
             default:
-                cout << "Invalid choice. Please enter 1, 2, or 3." << endl;
+                cout << "Invalid choice. Please enter a valid option." << endl;
         }
     }
 }
-
